@@ -176,9 +176,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <tr><td>Batch processing</td><td>—</td><td>Up to 10 images</td></tr>
 <tr><td>AI quality</td><td>Standard</td><td>High quality (FP16)</td></tr>
 </table>
-<p class="pro-price">$19.99 <span>one-time &bull; bundle of 11 tools</span></p>
+<p class="pro-price" id="pro-card-price">$9.99 <span>individual</span> | $19.99 <span>bundle (11 tools)</span></p>
 <div class="btn-row" style="justify-content:center;">
-<button class="btn btn-primary" onclick="showProModal()">Get PRO Bundle</button>
+<button class="btn btn-primary" onclick="showProModal()">Unlock PRO</button>
 </div>
 </div>
 
@@ -212,8 +212,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <tr><td>Batch processing</td><td>—</td><td>Up to 10 images</td></tr>
 <tr><td>AI quality</td><td>Standard</td><td>High quality</td></tr>
 </table>
-<p class="pro-price">$19.99 <span>one-time payment (bundle covers all tools)</span></p>
-<p style="text-align:center;margin-bottom:12px;"><a href="javascript:void(0)" id="btn-buy-pro" class="btn btn-primary" style="text-decoration:none;display:inline-block;padding:10px 24px;">Buy PRO Bundle</a></p>
+<p class="pro-price">$9.99 <span>individual</span> &nbsp;|&nbsp; $19.99 <span>bundle (11 tools)</span></p>
+<div style="text-align:center;margin-bottom:12px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+<a href="javascript:void(0)" id="btn-buy-individual" class="btn btn-primary" style="text-decoration:none;display:inline-block;padding:10px 24px;">Buy PRO $9.99</a>
+<a href="javascript:void(0)" id="btn-buy-bundle" class="btn btn-secondary" style="text-decoration:none;display:inline-block;padding:10px 24px;background:#e2e8f0;color:#475569;">Buy Bundle $19.99</a>
+</div>
 <div class="license-row">
 <input type="text" id="pro-key" placeholder="Paste your Gumroad license key here">
 <button class="btn btn-primary" onclick="actPRO()">Activate</button>
@@ -433,17 +436,23 @@ async function actPRO() {
     if (offlineProChecksum(k)) { pro = 1; try { localStorage.setItem('bgrmv_pro', '1'); } catch(e) {} closeProModal(); updateProUI(); toast('PRO Activated!'); return; }
   }
   if (!k || k.length < 10) { toast('Please enter your Gumroad license key'); return; }
-  try {
-    const r = await fetch('https://api.gumroad.com/v2/licenses/verify', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ product_id: 'xdlh1FHKAU0E7q3ZRuHPaw==', license_key: k })
-    });
-    const d = await r.json();
-    if (d.success && d.purchase) {
-      pro = 1; try { localStorage.setItem('bgrmv_pro', '1'); } catch(e) {}
-      closeProModal(); updateProUI(); toast('PRO Activated!');
-    } else { toast('Invalid license key'); }
-  } catch(e) { toast('Verification failed. Check network.'); }
+  // Try individual product first, then bundle
+  const productIds = ['hz1tJrkBE7_6ByNqSU7v-w==', 'xdlh1FHKAU0E7q3ZRuHPaw=='];
+  for (const pid of productIds) {
+    try {
+      const r = await fetch('https://api.gumroad.com/v2/licenses/verify', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ product_id: pid, license_key: k })
+      });
+      const d = await r.json();
+      if (d.success && d.purchase) {
+        pro = 1; try { localStorage.setItem('bgrmv_pro', '1'); } catch(e) {}
+        closeProModal(); updateProUI(); toast('PRO Activated!');
+        return;
+      }
+    } catch(e) {}
+  }
+  toast('Invalid license key');
 }
 
 function updateProUI() {
@@ -467,9 +476,23 @@ window.addEventListener('message', function(e) {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-  var btn = document.getElementById('btn-buy-pro');
-  if (btn) {
-    btn.addEventListener('click', function() {
+  // Individual product buy button
+  var btnInd = document.getElementById('btn-buy-individual');
+  if (btnInd) {
+    btnInd.addEventListener('click', function() {
+      var url = 'https://xuebo8.gumroad.com/l/bgrmv-pro';
+      var w = Math.min(600, window.innerWidth - 40);
+      var h = Math.min(700, window.innerHeight - 40);
+      var left = Math.max(0, (window.innerWidth - w) / 2);
+      var top = Math.max(0, (window.innerHeight - h) / 2);
+      var win = window.open(url, 'gumroad-checkout', 'width='+w+',height='+h+',left='+left+',top='+top+',menubar=no,toolbar=no,status=no');
+      if (!win) window.location.href = url;
+    });
+  }
+  // Bundle buy button
+  var btnBundle = document.getElementById('btn-buy-bundle');
+  if (btnBundle) {
+    btnBundle.addEventListener('click', function() {
       var url = 'https://xuebo8.gumroad.com/l/skxcpj';
       var w = Math.min(600, window.innerWidth - 40);
       var h = Math.min(700, window.innerHeight - 40);
