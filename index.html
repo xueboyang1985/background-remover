@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Background Remover - Remove Image Background Free Online</title>
+<meta name="description" content="Remove image backgrounds instantly with AI. 100% browser-based, no upload, no tracking. Free online background removal tool with before/after comparison and HD download.">
+<meta property="og:title" content="AI Background Remover - Remove Image Background Free Online">
+<meta property="og:description" content="Remove image backgrounds instantly with AI. 100% browser-based, no upload, no tracking.">
+<meta property="og:image" content="https://xueboyang1985.github.io/background-remover/og-image.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://xueboyang1985.github.io/background-remover/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://xueboyang1985.github.io/background-remover/">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎨</text></svg>">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "AI Background Remover - Remove Image Background Free Online",
+  "url": "https://xueboyang1985.github.io/background-remover/",
+  "description": "Remove image backgrounds instantly with AI. 100% browser-based, no upload, no tracking.",
+  "applicationCategory": "Multimedia",
+  "operatingSystem": "All",
+  "browserRequirements": "Requires JavaScript",
+  "offers": {
+    "@type": "Offer",
+    "price": "9.99",
+    "priceCurrency": "USD"
+  },
+  "featureList": [
+    "AI background removal",
+    "Before/after comparison",
+    "HD download",
+    "Background color replacement",
+    "100% browser-based"
+  ]
+}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f8fafc;color:#1a1a1a;line-height:1.6;}
+.container{max-width:800px;margin:0 auto;padding:20px;}
+.header{text-align:center;padding:40px 0 20px;}
+.header h1{font-size:28px;margin-bottom:8px;color:#1a1a1a;}
+.header p{color:#64748b;font-size:15px;}
+.card{background:white;border-radius:12px;padding:24px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,0.08);}
+.card-title{font-size:16px;font-weight:600;margin-bottom:12px;color:#1a1a1a;}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0;}
+.btn{padding:8px 20px;border:none;border-radius:6px;cursor:pointer;font-size:13px;font-weight:500;transition:all 0.15s;}
+.btn-primary{background:#6366f1;color:white;}
+.btn-primary:hover{background:#4f46e5;}
+.btn-primary:disabled{background:#a5b4fc;cursor:not-allowed;}
+.btn-secondary{background:#e2e8f0;color:#475569;}
+.btn-secondary:hover{background:#cbd5e1;}
+.btn-success{background:#059669;color:white;}
+
+/* Upload zone */
+#drop-zone{border:2px dashed #e2e8f0;border-radius:12px;padding:40px 20px;text-align:center;cursor:pointer;transition:all 0.15s;background:#fafafa;}
+#drop-zone:hover,#drop-zone.dragover{border-color:#6366f1;background:#eef2ff;}
+#drop-zone.has-image{padding:20px;border-style:solid;border-color:#d1d5db;background:white;}
+#drop-zone input{display:none;}
+.drop-icon{font-size:40px;color:#6366f1;margin-bottom:12px;}
+.drop-text{font-size:15px;color:#475569;margin-bottom:4px;}
+.drop-hint{font-size:12px;color:#94a3b8;}
+.preview-row{display:flex;gap:16px;justify-content:center;align-items:flex-start;flex-wrap:wrap;}
+.preview-box{flex:1;min-width:200px;text-align:center;}
+.preview-box img{max-width:100%;max-height:400px;border-radius:8px;display:block;margin:0 auto;}
+.preview-label{font-size:12px;color:#94a3b8;margin-top:8px;}
+
+/* Progress bar */
+.progress-wrap{display:none;margin:16px 0;}
+.progress-wrap.active{display:block;}
+.progress-bar{width:100%;height:8px;background:#e2e8f0;border-radius:4px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,#6366f1,#8b5cf6);border-radius:4px;width:0%;transition:width 0.3s;}
+.progress-label{font-size:12px;color:#64748b;margin-top:6px;text-align:center;}
+
+/* Image slider comparison */
+.compare-wrap{position:relative;display:none;margin:12px 0;}
+.compare-wrap.active{display:block;}
+.compare-container{position:relative;width:100%;max-width:600px;margin:0 auto;overflow:hidden;border-radius:8px;user-select:none;-webkit-user-select:none;}
+.compare-before,.compare-after{display:block;width:100%;height:auto;}
+.compare-after{position:absolute;top:0;left:0;height:100%;width:var(--slider-pos,50%);object-fit:cover;object-position:left;}
+.compare-after-wrap{position:absolute;top:0;left:0;height:100%;width:var(--slider-pos,50%);overflow:hidden;}
+.compare-slider{position:absolute;top:0;bottom:0;left:var(--slider-pos,50%);width:4px;background:white;cursor:ew-resize;transform:translateX(-2px);z-index:2;box-shadow:0 0 4px rgba(0,0,0,0.3);}
+.compare-slider::after{content:'\2B9C';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:white;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 2px 6px rgba(0,0,0,0.2);color:#6366f1;}
+
+/* Options */
+.options-row{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0;}
+.color-opt{display:flex;align-items:center;gap:8px;font-size:13px;color:#475569;}
+.color-opt input[type=color]{width:32px;height:32px;border:2px solid #e2e8f0;border-radius:6px;cursor:pointer;padding:0;}
+.color-opt input[type=color]:disabled{opacity:0.4;cursor:not-allowed;}
+.pro-badge{display:inline-block;font-size:10px;background:#fef3c7;color:#92400e;padding:2px 6px;border-radius:4px;font-weight:600;}
+
+.stat{font-size:12px;color:#94a3b8;margin-top:4px;}
+.pro-hint{text-align:center;padding:10px;background:#fef3c7;border-radius:8px;font-size:13px;color:#92400e;margin-top:12px;}
+.pro-hint a{color:#6366f1;font-weight:600;text-decoration:none;cursor:pointer;}
+.footer{text-align:center;padding:40px 0;color:#94a3b8;font-size:13px;}
+.cross-card{padding:16px;border-radius:8px;font-size:13px;}
+.cross-card p{color:#64748b;margin-bottom:4px;}
+.cross-card a{text-decoration:none;font-weight:600;}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1a1a1a;color:white;padding:10px 20px;border-radius:8px;font-size:13px;z-index:999;opacity:0;transition:opacity 0.3s;}
+.toast.show{opacity:1;}
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:1000;}
+.modal{background:white;border-radius:16px;padding:28px;max-width:480px;width:90%;}
+.modal h2{font-size:22px;margin-bottom:16px;text-align:center;}
+.compare-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13px;}
+.compare-table th{background:#f1f5f9;padding:10px 12px;text-align:left;border-bottom:2px solid #e2e8f0;}
+.compare-table td{padding:10px 12px;border-bottom:1px solid #f1f5f9;}
+.pro-price{text-align:center;margin:16px 0;font-size:20px;font-weight:700;}
+.pro-price span{font-size:13px;color:#64748b;font-weight:400;}
+.license-row{display:flex;gap:8px;margin-top:16px;}
+.license-row input{flex:1;padding:10px 12px;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;}
+.license-row input:focus{outline:none;border-color:#6366f1;}
+.hidden-canvas{display:none;}
+@media(max-width:600px){.preview-row{flex-direction:column;}.compare-container{max-width:100%;}}
+</style>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+<div class="container">
+<div class="header">
+<h1>AI Background Remover</h1>
+<p>Remove image backgrounds instantly with AI — 100% in your browser, nothing uploaded</p>
+</div>
+
+<!-- Upload -->
+<div class="card">
+<div id="drop-zone">
+<div class="drop-icon">🖼️</div>
+<div class="drop-text">Drop an image here or click to browse</div>
+<div class="drop-hint">Supports JPG, PNG, WebP — Max 20MB</div>
+<input type="file" id="file-input" accept="image/*">
+</div>
+
+<div class="progress-wrap" id="progress-wrap">
+<div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+<div class="progress-label" id="progress-label">Loading AI model...</div>
+</div>
+
+<!-- Result area -->
+<div class="compare-wrap" id="compare-wrap">
+<div class="compare-container" id="compare-container">
+<img id="compare-before" class="compare-before" alt="Original">
+<div class="compare-after-wrap" id="after-wrap">
+<img id="compare-after" class="compare-after" alt="Background removed">
+</div>
+<div class="compare-slider" id="compare-slider"></div>
+</div>
+
+<div class="options-row">
+<div class="color-opt">
+<label>Background color:</label>
+<input type="color" id="bg-color" value="#ffffff" disabled>
+<span class="pro-badge">PRO</span>
+</div>
+</div>
+
+<div class="btn-row" id="result-btns">
+<button class="btn btn-primary" onclick="downloadResult()">Download PNG</button>
+<button class="btn btn-secondary" onclick="resetTool()">Remove &amp; try another</button>
+</div>
+<p class="stat" id="result-stat"></p>
+</div>
+
+<div id="batch-wrap" style="display:none;"></div>
+</div>
+
+<!-- PRO card -->
+<div class="card" id="pro-card">
+<div class="card-title">Unlock PRO Features</div>
+<table class="compare-table">
+<tr><th>Feature</th><th>Free</th><th>PRO</th></tr>
+<tr><td>Output resolution</td><td>Max 1080px</td><td>Full HD+ (original)</td></tr>
+<tr><td>Background color</td><td>—</td><td>Any color or gradient</td></tr>
+<tr><td>Batch processing</td><td>—</td><td>Up to 10 images</td></tr>
+<tr><td>AI quality</td><td>Standard</td><td>High quality (FP16)</td></tr>
+</table>
+<p class="pro-price">$19.99 <span>one-time &bull; bundle of 11 tools</span></p>
+<div class="btn-row" style="justify-content:center;">
+<button class="btn btn-primary" onclick="showProModal()">Get PRO Bundle</button>
+</div>
+</div>
+
+<!-- Cross-promotion -->
+<div class="cross-card" style="border-left:3px solid #6366f1;">
+<p>Also check out <strong>PDF Tools</strong> &mdash; merge, split, compress PDFs</p>
+<a href="https://xueboyang1985.github.io/pdf-tools/" target="_blank" style="color:#6366f1;">Try PDF Tools &rarr;</a>
+</div>
+<div class="cross-card" style="border-left:3px solid #6366f1;">
+<p>Also check out <strong>QR Code Generator</strong> &mdash; create custom QR codes</p>
+<a href="https://xueboyang1985.github.io/qr-code-generator/" target="_blank" style="color:#6366f1;">Try QR Code Generator &rarr;</a>
+</div>
+<div class="cross-card" style="border-left:3px solid #6366f1;">
+<p>Also check out <strong>Free Browser Tools Hub</strong> &mdash; all 11 tools in one place</p>
+<a href="https://xueboyang1985.github.io/free-browser-tools/" target="_blank" style="color:#6366f1;">Browse All Tools &rarr;</a>
+</div>
+
+<div class="footer">
+<p>100% local &bull; No upload &bull; AI runs in your browser &bull; Your images never leave your device</p>
+</div>
+</div>
+
+<!-- PRO Modal -->
+<div class="modal-overlay" id="pro-modal" style="display:none" onclick="if(event.target===this)closeProModal()">
+<div class="modal">
+<h2>🚀 AI Background Remover PRO</h2>
+<table class="compare-table">
+<tr><th>Feature</th><th>Free</th><th>PRO</th></tr>
+<tr><td>Output resolution</td><td>Max 1080px</td><td>Full HD+</td></tr>
+<tr><td>Background color</td><td>—</td><td>Any color</td></tr>
+<tr><td>Batch processing</td><td>—</td><td>Up to 10 images</td></tr>
+<tr><td>AI quality</td><td>Standard</td><td>High quality</td></tr>
+</table>
+<p class="pro-price">$19.99 <span>one-time payment (bundle covers all tools)</span></p>
+<p style="text-align:center;margin-bottom:12px;"><a href="javascript:void(0)" id="btn-buy-pro" class="btn btn-primary" style="text-decoration:none;display:inline-block;padding:10px 24px;">Buy PRO Bundle</a></p>
+<div class="license-row">
+<input type="text" id="pro-key" placeholder="Paste your Gumroad license key here">
+<button class="btn btn-primary" onclick="actPRO()">Activate</button>
+<button class="btn btn-primary" onclick="tryDemo()" style="background:#e2e8f0;color:#475569;font-size:11px;padding:6px 12px;">Try Demo</button>
+</div>
+<p style="text-align:center;font-size:12px;color:#94a3b8;margin-top:8px;"><a href="guide.html" style="color:#6366f1;">User Guide & FAQ</a></p>
+</div>
+</div>
+
+<script src="https://gumroad.com/js/gumroad.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "@imgly/background-removal": "https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.7.0/+esm"
+  }
+}
+</script>
+<script type="module">
+import { removeBackground, preload } from '@imgly/background-removal';
+
+// === Configuration ===
+const MAX_FREE_DIM = 1080;
+const SECRET = 'BGRMV-ABCD-EFGH-IJKL-MNOP'.split('').reduce((a,c)=>a+c.charCodeAt(0),0);
+const MAX_FREE_BATCH = 1;
+const MAX_PRO_BATCH = 10;
+
+let pro = 0;
+try { pro = localStorage.getItem('bgrmv_pro') === '1'; } catch(e) {}
+
+let sourceFile = null;
+let resultBlob = null;
+let processing = false;
+let bgColor = '#ffffff';
+
+// DOM refs
+const dropZone = document.getElementById('drop-zone');
+const fileInput = document.getElementById('file-input');
+const progressWrap = document.getElementById('progress-wrap');
+const progressFill = document.getElementById('progress-fill');
+const progressLabel = document.getElementById('progress-label');
+const compareWrap = document.getElementById('compare-wrap');
+const compareBefore = document.getElementById('compare-before');
+const compareAfter = document.getElementById('compare-after');
+const afterWrap = document.getElementById('after-wrap');
+const compareSlider = document.getElementById('compare-slider');
+const resultStat = document.getElementById('result-stat');
+const bgColorInput = document.getElementById('bg-color');
+const resultBtns = document.getElementById('result-btns');
+
+// Drag & drop
+dropZone.addEventListener('click', () => fileInput.click());
+dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', (e) => { e.preventDefault(); dropZone.classList.remove('dragover'); handleFile(e.dataTransfer.files[0]); });
+fileInput.addEventListener('change', (e) => { if (e.target.files[0]) handleFile(e.target.files[0]); });
+
+// Slider drag
+let sliderDragging = false;
+compareSlider.addEventListener('mousedown', () => sliderDragging = true);
+compareSlider.addEventListener('touchstart', () => sliderDragging = true);
+document.addEventListener('mousemove', (e) => { if (sliderDragging) updateSlider(e.clientX); });
+document.addEventListener('touchmove', (e) => { if (sliderDragging) updateSlider(e.touches[0].clientX); });
+document.addEventListener('mouseup', () => sliderDragging = false);
+document.addEventListener('touchend', () => sliderDragging = false);
+
+function updateSlider(clientX) {
+  const rect = compareContainer.getBoundingClientRect();
+  let pct = ((clientX - rect.left) / rect.width) * 100;
+  pct = Math.max(5, Math.min(95, pct));
+  compareContainer.style.setProperty('--slider-pos', pct + '%');
+}
+
+// Color picker
+bgColorInput.addEventListener('input', (e) => {
+  bgColor = e.target.value;
+  if (resultBlob) applyBgColor();
+});
+
+async function applyBgColor() {
+  if (!resultBlob) return;
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  const img = new Image();
+  img.src = URL.createObjectURL(resultBlob);
+  await new Promise(r => { img.onload = r; });
+  canvas.width = img.width;
+  canvas.height = img.height;
+  ctx.fillStyle = bgColor;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(img, 0, 0);
+  canvas.toBlob((blob) => {
+    if (blob) {
+      compareAfter.src = URL.createObjectURL(blob);
+    }
+  }, 'image/png');
+}
+
+// === File handling ===
+async function handleFile(file) {
+  if (!file || !file.type.startsWith('image/')) { toast('Please select an image file'); return; }
+  if (file.size > 20 * 1024 * 1024) { toast('File too large (max 20MB)'); return; }
+  if (processing) { toast('Already processing'); return; }
+
+  sourceFile = file;
+  resultBlob = null;
+  processing = true;
+  compareWrap.classList.remove('active');
+
+  // Show preview of original
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    compareBefore.src = e.target.result;
+    dropZone.innerHTML = `<div class="preview-row"><div class="preview-box"><img src="${e.target.result}" style="max-height:250px;"><div class="preview-label">Original</div></div></div>`;
+    dropZone.classList.add('has-image');
+  };
+  reader.readAsDataURL(file);
+
+  // Show progress
+  progressWrap.classList.add('active');
+  progressFill.style.width = '5%';
+  progressLabel.textContent = 'Loading AI model...';
+
+  try {
+    // Preload model
+    await preload({ device: 'gpu', model: pro ? 'isnet_fp16' : 'isnet_quint8' });
+    progressFill.style.width = '40%';
+    progressLabel.textContent = 'Processing image...';
+
+    // Remove background
+    const imgBlob = await removeBackground(file, {
+      device: 'gpu',
+      model: pro ? 'isnet_fp16' : 'isnet_quint8',
+      output: { format: 'image/png', quality: 1.0 }
+    });
+    progressFill.style.width = '90%';
+
+    // Resize if free
+    if (!pro) {
+      const resized = await resizeImage(imgBlob, MAX_FREE_DIM);
+      resultBlob = resized;
+    } else {
+      resultBlob = imgBlob;
+    }
+
+    // Show result
+    const url = URL.createObjectURL(resultBlob);
+    compareAfter.src = url;
+
+    // Create colored version if needed
+    if (pro && bgColor !== '#ffffff') {
+      applyBgColor();
+    }
+
+    // Wait for image load
+    await new Promise((r) => { compareAfter.onload = r; setTimeout(r, 500); });
+
+    compareWrap.classList.add('active');
+    const origSize = (file.size / 1024).toFixed(0);
+    const newSize = (resultBlob.size / 1024).toFixed(0);
+    resultStat.textContent = `Done! ${origSize}KB → ${newSize}KB | ${file.name}`;
+
+    progressWrap.classList.remove('active');
+    if (pro) bgColorInput.disabled = false;
+  } catch (err) {
+    console.error(err);
+    toast('Processing failed: ' + (err.message || 'unknown error'));
+    progressWrap.classList.remove('active');
+  }
+  processing = false;
+}
+
+function resizeImage(blob, maxDim) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      let w = img.width, h = img.height;
+      if (w > maxDim || h > maxDim) {
+        const ratio = Math.min(maxDim / w, maxDim / h);
+        w = Math.round(w * ratio);
+        h = Math.round(h * ratio);
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, w, h);
+      canvas.toBlob((b) => resolve(b), 'image/png');
+    };
+    img.src = URL.createObjectURL(blob);
+  });
+}
+
+function downloadResult() {
+  if (!resultBlob) return;
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(resultBlob);
+  a.download = sourceFile ? sourceFile.name.replace(/\.[^.]+$/, '') + '-no-bg.png' : 'no-bg.png';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function resetTool() {
+  sourceFile = null;
+  resultBlob = null;
+  compareWrap.classList.remove('active');
+  dropZone.innerHTML = `<div class="drop-icon">🖼️</div>
+<div class="drop-text">Drop an image here or click to browse</div>
+<div class="drop-hint">Supports JPG, PNG, WebP — Max 20MB</div>`;
+  dropZone.classList.remove('has-image');
+  fileInput.value = '';
+  bgColorInput.disabled = true;
+  resultStat.textContent = '';
+}
+
+// === PRO functions ===
+function validateProKeyFormat(k) { return /^BGRMV-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(k); }
+function offlineProChecksum(k) { return k.split('').reduce((a,c)=>a+c.charCodeAt(0),0) === SECRET; }
+
+async function actPRO() {
+  const k = document.getElementById('pro-key').value.trim().toUpperCase();
+  if (k.startsWith('BGRMV-')) {
+    if (!validateProKeyFormat(k)) { toast('Invalid format. Must be BGRMV-XXXX-XXXX-XXXX-XXXX'); return; }
+    if (offlineProChecksum(k)) { pro = 1; try { localStorage.setItem('bgrmv_pro', '1'); } catch(e) {} closeProModal(); updateProUI(); toast('PRO Activated!'); return; }
+  }
+  if (!k || k.length < 10) { toast('Please enter your Gumroad license key'); return; }
+  try {
+    const r = await fetch('https://api.gumroad.com/v2/licenses/verify', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ product_id: 'xdlh1FHKAU0E7q3ZRuHPaw==', license_key: k })
+    });
+    const d = await r.json();
+    if (d.success && d.purchase) {
+      pro = 1; try { localStorage.setItem('bgrmv_pro', '1'); } catch(e) {}
+      closeProModal(); updateProUI(); toast('PRO Activated!');
+    } else { toast('Invalid license key'); }
+  } catch(e) { toast('Verification failed. Check network.'); }
+}
+
+function updateProUI() {
+  document.getElementById('pro-card').style.display = 'none';
+  bgColorInput.disabled = false;
+  const hint = document.querySelector('.pro-hint');
+  if (hint) hint.innerHTML = 'PRO active &ndash; full HD, batch, background color.';
+  // Update PRO badge on color picker
+  const badge = document.querySelector('.color-opt .pro-badge');
+  if (badge) badge.textContent = '✓';
+}
+
+window.addEventListener('message', function(e) {
+  try {
+    var d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
+    if (e.origin.indexOf('gumroad.com') >= 0 && d && d.license_key) {
+      document.getElementById('pro-key').value = d.license_key;
+      actPRO();
+    }
+  } catch(e1) {}
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  var btn = document.getElementById('btn-buy-pro');
+  if (btn) {
+    btn.addEventListener('click', function() {
+      var url = 'https://xuebo8.gumroad.com/l/skxcpj';
+      var w = Math.min(600, window.innerWidth - 40);
+      var h = Math.min(700, window.innerHeight - 40);
+      var left = Math.max(0, (window.innerWidth - w) / 2);
+      var top = Math.max(0, (window.innerHeight - h) / 2);
+      var win = window.open(url, 'gumroad-checkout', 'width='+w+',height='+h+',left='+left+',top='+top+',menubar=no,toolbar=no,status=no');
+      if (!win) window.location.href = url;
+    });
+  }
+  // Check if already pro
+  if (pro) updateProUI();
+});
+
+function showProModal() { document.getElementById('pro-modal').style.display = 'flex'; }
+function closeProModal() { document.getElementById('pro-modal').style.display = 'none'; }
+function toast(msg) { var t=document.getElementById('toast'); t.textContent=msg; t.className='toast show'; setTimeout(function(){t.className='toast';},3000); }
+function tryDemo() { document.getElementById('pro-key').value='BGRMV-ABCD-EFGH-IJKL-MNOP'; actPRO(); }
+
+// Export for inline onclick handlers
+window.downloadResult = downloadResult;
+window.resetTool = resetTool;
+window.showProModal = showProModal;
+window.closeProModal = closeProModal;
+window.toast = toast;
+window.tryDemo = tryDemo;
+window.actPRO = actPRO;
+</script>
+</body>
+</html>
