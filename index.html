@@ -224,15 +224,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 </div>
 
 <script src="https://gumroad.com/js/gumroad.js" defer></script>
-<script type="importmap">
-{
-  "imports": {
-    "@imgly/background-removal": "https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.7.0/+esm"
-  }
-}
-</script>
-<script type="module">
-import { removeBackground, preload } from '@imgly/background-removal';
+<script src="bundle.js"></script>
+<script>
+var B = Bgrmv;
 
 // === Configuration ===
 const MAX_FREE_DIM = 1080;
@@ -338,12 +332,12 @@ async function handleFile(file) {
 
   try {
     // Preload model
-    await preload({ device: 'gpu', model: pro ? 'isnet_fp16' : 'isnet_quint8' });
+    await B.preload({ device: 'gpu', model: pro ? 'isnet_fp16' : 'isnet_quint8' });
     progressFill.style.width = '40%';
     progressLabel.textContent = 'Processing image...';
 
     // Remove background
-    const imgBlob = await removeBackground(file, {
+    const imgBlob = await B.removeBackground(file, {
       device: 'gpu',
       model: pro ? 'isnet_fp16' : 'isnet_quint8',
       output: { format: 'image/png', quality: 1.0 }
